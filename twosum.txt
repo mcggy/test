@@ -1,0 +1,55 @@
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        temp = sorted(nums)
+        start = 0
+        end = len(nums) - 1
+        while start <end:
+            sum = temp[start] + temp[end]
+            if sum == target:
+                if temp[start]==temp[end]:
+                    return nums.index(temp[start]),nums.index(temp[start])+nums[nums.index(temp[start])+1:].index(temp[end])+1
+                else:
+                    return nums.index(temp[start]),nums.index(temp[end])
+            elif sum > target:
+                end = end - 1
+            else:
+                start = start + 1
+
+def stringToIntegerList(input):
+    return json.loads(input)
+
+def stringToInt(input):
+    return int(input)
+
+def integerListToString(nums, len_of_list=None):
+    if not len_of_list:
+        len_of_list = len(nums)
+    return json.dumps(nums[:len_of_list])
+
+def main():
+    import sys
+    def readlines():
+        for line in sys.stdin:
+            yield line.strip('\n')
+    lines = readlines()
+    while True:
+        try:
+            line = lines.next()
+            nums = stringToIntegerList(line)
+            line = lines.next()
+            target = stringToInt(line)
+            
+            ret = Solution().twoSum(nums, target)
+
+            out = integerListToString(ret)
+            print out
+        except StopIteration:
+            break
+
+if __name__ == '__main__':
+    main()
